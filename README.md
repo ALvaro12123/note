@@ -1,38 +1,50 @@
-<h1 align="center">📔 Trego Notepad 📔</h1>
+<h1 align="center">📔 Aplikasi My Notepad 📔</h1>
 
-<h4 align="center">Aplikasi Notepad Sederhana Dibuat Menggunakan Framework Flutter dengan tambahan database HIVE untuk menyimpan data notepad jangka panjang.</h4>
+<h4 align="center">Aplikasi Notepad Sederhana Dibuat Menggunakan Framework Flutter.</h4>
 
 <h3>👋 Contributor:</h3>
 
-- 🌱 m rizky alvaro: **XI/PPLG-3/19**
+- 🌱 muhammad rizky alvaro : **XI/PPLG-3/19**
 
-<h3>✅ Features</h3>
+<h3>📱 Menggunakan State Management Provider</h3>
+<p>Aplikasi Notepad ini menggunakan Provider sebagai solusi manajemen state.</p>
 
-1. [x] Bisa membuat note baru
-2. [x] Bisa mengedit note
-3. [x] Bisa menghapus note
-4. [x] Data tidak akan hilang jika keluar dari aplikasi
-5. [x] Menggunakan database HIVE
-6. [x] Dapat menampilkan semua data note
+```dart
+import 'package:flutter/material.dart';
+import '../models/note_model.dart';
+
+class NoteProvider with ChangeNotifier {
+  final List<Note> _notes = [];
+
+  List<Note> get notes => _notes;
+
+  void addNote(Note newNote) {
+    _notes.add(newNote);
+    notifyListeners();
+  }
+
+  void deleteNote(int id) {
+    _notes.removeWhere((note) => note.id == id);
+    notifyListeners();
+  }
+
+  void updateNote(Note updatedNote) {
+    final index = _notes.indexWhere((note) => note.id == updatedNote.id);
+    if (index != -1) {
+      _notes[index] = updatedNote;
+      notifyListeners();
+    }
+  }
+}
+```
 
 <h3>📷 Pictures</h3>
 
 <h5>Home Page</h5>
-<img alt="Home Page" src="foto\Screenshot 2025-11-27 104712.png"/>
+<img src="foto/home.png" alt="Home Page" />
 
-<h5>Create Page</h5>
-<img alt="Create Page" src="foto\Screenshot 2025-11-27 105113.png"/>
+<h5>Input Page</h5>
+<img src="foto/input.png" alt="Input Page" />
 
-<h5>Edit Page</h5>
-<img alt="Edit Page" src="foto\Screenshot 2025-11-27 104737.png"/>
-<img alt="Edit Done" src="foto\Screenshot 2025-11-27 104753.png"/>
-
-<h5>Delete Confirmation</h5>
-<img alt="Delete" src="foto\Screenshot 2025-11-27 104820.png"/>
-<img  />
-
-<h3>📥 Installation</h3>
-
-1. Download aplikasi Trego Notepad Melalui `Releases`.
-2. Pilih file `trego-notepad.apk`.
-3. Install aplikasi nya, lalu aplikasi siap digunakan!
+<h5>Notepad Page</h5>
+<img src="foto/browse.png" alt="Notepad Page" />

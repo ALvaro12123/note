@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:trego_notepad/repositories/notes_repository.dart';
-import 'package:trego_notepad/screens/NotesListScreen.dart';
-import 'blocs/notes_list_bloc/notes_list_bloc.dart';
+import 'package:provider/provider.dart';
+import 'providers/note_provider.dart';
+import 'pages/home_page.dart';
+import 'pages/add_note_page.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await Hive.initFlutter();
-  // ✅ Buka box terlebih dahulu sebelum digunakan
-  await Hive.openBox('notesbox');
-
+void main() {
   runApp(const MyApp());
 }
 
@@ -20,19 +13,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => NotesRepository(Hive.box('notesbox')),
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) =>
-            NotesListBloc(context.read<NotesRepository>())..add(LoadNotes()),
-          ),
-        ],
-        child: MaterialApp(
-          title: 'Notes App',
-          home: const NotesListScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => NoteProvider(),
+      child: MaterialApp(
+        title: 'Notes App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
+        // ROUTING configuration:cite[4]:cite[9]
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const HomePage(),
+          '/add-note': (context) => const AddNotePage(),
+        },
       ),
     );
   }

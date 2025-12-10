@@ -1,6 +1,6 @@
 {
-    "name": "note_pad",
-    "short_name": "note_pad",
+    "name": "notepad_oyi",
+    "short_name": "notepad_oyi",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
